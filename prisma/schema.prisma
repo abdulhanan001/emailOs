@@ -1,0 +1,19 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:password@localhost:5432/emailOs" // Replace with your actual database connection URL
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  gender    String   // You can use an ENUM type here for "male" and "female"
+  age       Int
+  about     String
+  dob       DateTime
+  education String[]
+}
