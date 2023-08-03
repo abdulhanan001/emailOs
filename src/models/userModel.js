@@ -1,6 +1,5 @@
 // userModel.js
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../config/prismaLogging')
 
 const saveUser = async (email, password, gender, age, about, dob, education) => {
   try {

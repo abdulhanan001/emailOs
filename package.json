@@ -17,6 +17,7 @@
     "morgan": "^1.10.0",
     "performance-now": "^2.1.0",
     "pg": "^8.11.2",
-    "prisma": "^5.1.1"
+    "prisma": "^5.1.1",
+    "prisma-query-log": "^3.2.0"
   }
 }
