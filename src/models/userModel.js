@@ -24,4 +24,16 @@ const saveUser = async (email, password, gender, age, about, dob, education) => 
   }
 };
 
-module.exports = { saveUser };
+const getAllUsers = async () => {
+  try {
+    // Use Prisma query to retrieve all users
+    const allUsers = await prisma.user.findMany();
+    return allUsers;
+  } catch (error) {
+    console.error('Error retrieving users:', error);
+    throw new Error('An error occurred while retrieving users.');
+  }
+};
+
+
+module.exports = { saveUser, getAllUsers };

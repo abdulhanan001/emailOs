@@ -16,4 +16,15 @@ const saveUser = async (req, res) => {
   }
 };
 
-module.exports = { saveUser };
+const getAllUsers = async (req, res) => {
+  try {
+    // Get all users using userModel.getAllUsers
+    const allUsers = await userModel.getAllUsers();
+    res.json(allUsers);
+  } catch (error) {
+    console.error('Error retrieving users:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving users.' });
+  }
+};
+
+module.exports = { saveUser,  getAllUsers };
