@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-// const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 const app = express();
@@ -11,7 +11,7 @@ const port = 5000; // You can use any port number you prefer
 app.use(bodyParser.json());
 
 // Routes
-// app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 
 
