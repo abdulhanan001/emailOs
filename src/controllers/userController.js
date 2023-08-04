@@ -5,8 +5,6 @@ const saveUser = async (req, res) => {
     const { email, password, gender, age, about, dob, education } = req.body;
 
     // Perform validation here if needed (e.g., check if email is valid, password meets requirements, etc.)
-
-    // Save user data using the UserModel
     const newUser = await save(email, password, gender, age, about, dob, education);
 
     res.json(newUser);
