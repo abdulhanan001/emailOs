@@ -1,7 +1,13 @@
 import { save, allUsers } from '../models/userModel.js'
+import { validateUserInput } from './userValidator.js';
 
 const saveUser = async (req, res) => {
   try {
+    const { error } = validateUserInput(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
     const { email, password, gender, age, about, dob, education } = req.body;
 
     // Perform validation here if needed (e.g., check if email is valid, password meets requirements, etc.)

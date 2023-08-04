@@ -15,5 +15,5 @@ model User {
   age       Int
   about     String
   dob       DateTime
-  education String[]
+  education String
 }
