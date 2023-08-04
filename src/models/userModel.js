@@ -1,7 +1,7 @@
 // userModel.js
-const prisma = require('../config/prismaLogging')
+import prisma from '../config/prismaLogging.js';
 
-const saveUser = async (email, password, gender, age, about, dob, education) => {
+const save = async (email, password, gender, age, about, dob, education) => {
   try {
     const formattedDOB = new Date(dob).toISOString();
 
@@ -24,7 +24,7 @@ const saveUser = async (email, password, gender, age, about, dob, education) => 
   }
 };
 
-const getAllUsers = async () => {
+const allUsers = async () => {
   try {
     // Use Prisma query to retrieve all users
     const allUsers = await prisma.user.findMany();
@@ -36,4 +36,4 @@ const getAllUsers = async () => {
 };
 
 
-module.exports = { saveUser, getAllUsers };
+export { save, allUsers };

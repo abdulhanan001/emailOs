@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { saveUser, getAllUsers } from '../controllers/userController.js';
+
 const router = express.Router();
-const userController = require('../controllers/userController');
 
 // POST endpoint to save user data to the 'users' table
-router.post('/', userController.saveUser);
-router.get('/', userController.getAllUsers);
+router.post('/', saveUser);
+router.get('/', getAllUsers);
 
-module.exports = router;
+export default router;
