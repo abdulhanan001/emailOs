@@ -16,6 +16,8 @@ describe('UserController Tests', () => {
   
   // Disconnect Prisma Client after all tests are done
   afterAll(async () => {
+    console.log(process.env.DATABASE_URL, '=======')
+    console.log(process.env.ONE, '-------Node ENV')
     await prisma.user.deleteMany({});
     await prisma.$disconnect();
   });

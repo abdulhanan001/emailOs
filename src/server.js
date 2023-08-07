@@ -1,5 +1,9 @@
-import { createServer } from './app.js'
+import { createServer } from './app.js';
 
-createServer().catch(() => {
-  console.log('Something went wrong!')
-})
+createServer()
+  .then(() => {
+    console.log('Server is running!');
+  })
+  .catch((error) => {
+    console.error('Something went wrong!', error);
+  });
