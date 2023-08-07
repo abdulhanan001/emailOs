@@ -55,7 +55,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
 
       expect(response.status).toBe(400);
-        expect(response.body).toEqual(expect.objectContaining({ error: '"email" must be a valid email' }));
+        expect(response.body).toEqual(expect.objectContaining({ message: '"email" must be a valid email' }));
     });
 
     it('should return an error when password is too short', async () => {
@@ -67,7 +67,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
   
       expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ error: '"password" length must be at least 8 characters long' }));
+      expect(response.body).toEqual(expect.objectContaining({ message: '"password" length must be at least 8 characters long' }));
     })
 
     it('should return an error when gender is not valid', async () => {
@@ -80,7 +80,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
   
       expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ error: '"gender" must be one of [male, female]' }));
+      expect(response.body).toEqual(expect.objectContaining({ message: '"gender" must be one of [male, female]' }));
     });
 
     it('should return an error when age is below 18', async () => {
@@ -94,7 +94,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
   
       expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ error: '"age" must be greater than or equal to 18' }));
+      expect(response.body).toEqual(expect.objectContaining({ message: '"age" must be greater than or equal to 18' }));
     });
 
     it('should return an error when "about" is missing', async () => {
@@ -111,7 +111,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
   
       expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ error: '"about" is required' }));
+      expect(response.body).toEqual(expect.objectContaining({ message: '"about" is required' }));
     });
 
     it('should return an error when "dob" is not in ISO date format', async () => {
@@ -127,7 +127,7 @@ describe('UserController Tests', () => {
       const response = await request(app).post('/api/users').send(user);
   
       expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ error: '"dob" must be in ISO 8601 date format' }));
+      expect(response.body).toEqual(expect.objectContaining({ message: '"dob" must be in ISO 8601 date format' }));
     });
   
     it('should return an error when "education" is not valid', async () => {
@@ -145,7 +145,7 @@ describe('UserController Tests', () => {
   
       expect(response.status).toBe(400);
       expect(response.body).toEqual(
-        expect.objectContaining({ error: '"education" must be one of [becahlurar, MS, PHD]' })
+        expect.objectContaining({ message: '"education" must be one of [becahlurar, MS, PHD]' })
       );
     });
   });

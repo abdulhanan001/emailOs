@@ -13,7 +13,7 @@ const validateUserModel = async (userData) => {
     eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
 
     if (formattedDOB > eighteenYearsAgo) {
-      throw new Error('You must be at least 18 years old to register.');
+      throw new Error('Your Date of Birth should be 18 years back.');
     }
 
 };
