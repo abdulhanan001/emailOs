@@ -24,7 +24,7 @@ _Required Node.js version: v20.2.0
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/crushlovely/aha-rewards-redemption.git
+   git clone https://github.com/abdulhanan001/emailOs.git
    ```
 2. Go to directory
     ```sh
