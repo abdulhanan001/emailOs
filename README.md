@@ -1,4 +1,4 @@
-# AHA Rewards Redemption
+# User Registration
 
 # post request
   post api/users register user
@@ -42,12 +42,12 @@ _Required Node.js version: v20.2.0
  ```
 6. Run test cases
    ```sh
-  npm run test
+    npm run test
   ```
 
 
 ### Directory structure
-  ```
+  
 ├── EmailOS
   ├── Prisma
     ├── migrations
@@ -68,4 +68,4 @@ _Required Node.js version: v20.2.0
   ├── package.json
   ├── jest.config.js
   └── README.md
-  ```
+
