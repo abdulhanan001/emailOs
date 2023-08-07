@@ -1,8 +1,12 @@
 // userModel.js
 import prisma from '../config/prismaLogging.js';
+import validateUserModel from '../validators/user.model.validations.js';
 
 const save = async (email, password, gender, age, about, dob, education) => {
-  try {
+  const userData = { email, password, gender, age, about, dob, education };
+  await validateUserModel(userData);
+
+  // try {
     const formattedDOB = new Date(dob).toISOString();
 
     const newUser = await prisma.user.create({
@@ -18,10 +22,10 @@ const save = async (email, password, gender, age, about, dob, education) => {
     });
 
     return newUser;
-  } catch (error) {
-    console.error('Error saving user data:', error);
-    throw new Error('An error occurred while saving user data.');
-  }
+  // } catch (error) {
+  //   console.error('Error saving user data:', error);
+  //   throw new Error('An error occurred while saving user data.');
+  // }
 };
 
 const allUsers = async () => {
