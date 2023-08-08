@@ -28,7 +28,7 @@ _Required Node.js version: v20.2.0
    ```
 2. Go to directory
     ```sh
-   cd aha-rewards-redemption
+   cd back-end
    ```
 
 3. Install NPM packages
