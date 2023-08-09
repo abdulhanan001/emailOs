@@ -1,11 +1,13 @@
 import express from 'express';
-import { saveUser, getAllUsers } from '../controllers/users.controller.js';
-import  asyncHandler from 'express-async-handler'
+import { saveUser, getAllUsers } from '../controllers/user.controller.js';
+import  asyncHandler from 'express-async-handler';
+import { validateMiddleware } from '../middlewares/validateSchema.middleware.js';
+import { createUserSchema } from '../schemas/user.schema.js';
 
-const router = express.Router();
+const userRouter = express.Router();
 
 // POST endpoint to save user data to the 'users' table
-router.post('/', asyncHandler(saveUser));
-router.get('/', asyncHandler(getAllUsers));
+userRouter.post('/', validateMiddleware(createUserSchema) ,asyncHandler(saveUser));
+userRouter.get('/', asyncHandler(getAllUsers));
 
-export default router;
+export { userRouter };

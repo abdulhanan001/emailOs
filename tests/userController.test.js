@@ -13,7 +13,7 @@ describe('UserController Tests', () => {
   afterAll(async () => {
     await app.close();
   })
-  
+
   // Disconnect Prisma Client after all tests are done
   afterAll(async () => {
     console.log(process.env.DATABASE_URL, '=======')
@@ -36,9 +36,9 @@ describe('UserController Tests', () => {
         "dob": new Date("1990-08-15").toISOString(),
         "education": "MS"
       }
-      
+
       // Perform the actual database operation using the PrismaClient
-    
+
       const response = await request(app).post('/api/users').send(user);
 
       const userCountAfter = await prisma.user.count(); // Get user count after saving
@@ -49,25 +49,36 @@ describe('UserController Tests', () => {
 
     it('should return the  error email is not vaild', async () => {
       const user = {
-        "email": "testgmail.com"
+        email: "testgmail.com",
+        password: '123456789', // Less than 8 characters
+        gender: 'male',
+        age: 19,
+        about: "I'm a software developer passionate about technology.",
+        dob: '1998-01-01',
+        education: 'PHD',
       }
-      
+
       const response = await request(app).post('/api/users').send(user);
 
-      expect(response.status).toBe(400);
-        expect(response.body).toEqual(expect.objectContaining({ message: '"email" must be a valid email' }));
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"email" must be a valid email'] }));
     });
 
     it('should return an error when password is too short', async () => {
       const user = {
         email: 'test@gmail.com',
         password: '123', // Less than 8 characters
+        gender: 'male',
+        age: 19,
+        about: "I'm a software developer passionate about technology.",
+        dob: '1998-01-01',
+        education: 'PHD',
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ message: '"password" length must be at least 8 characters long' }));
+
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"password" length must be at least 8 characters long'] }));
     })
 
     it('should return an error when gender is not valid', async () => {
@@ -75,12 +86,16 @@ describe('UserController Tests', () => {
         email: 'test@gmail.com',
         password: '12345678',
         gender: 'unknown', // Invalid gender value
+        age: 19,
+        about: "I'm a software developer passionate about technology.",
+        dob: '1998-01-01',
+        education: 'PHD',
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ message: '"gender" must be one of [male, female]' }));
+
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"gender" must be one of [male, female]'] }));
     });
 
     it('should return an error when age is below 18', async () => {
@@ -89,12 +104,15 @@ describe('UserController Tests', () => {
         password: '12345678',
         gender: 'male',
         age: 16, // Age below 18
+        about: "I'm a software developer passionate about technology.",
+        dob: '1998-01-01',
+        education: 'PHD',
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ message: '"age" must be greater than or equal to 18' }));
+
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"age" must be greater than or equal to 18'] }));
     });
 
     it('should return an error when "about" is missing', async () => {
@@ -105,13 +123,13 @@ describe('UserController Tests', () => {
         age: 25,
         // "about" field is missing
         dob: '1998-01-01',
-        education: 'bachelors',
+        education: 'MS',
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ message: '"about" is required' }));
+
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"about" is required'] }));
     });
 
     it('should return an error when "dob" is not in ISO date format', async () => {
@@ -120,16 +138,17 @@ describe('UserController Tests', () => {
         password: '12345678',
         gender: 'male',
         age: 25,
-        about: 'I am a test user.',
+        about: "I'm a software developer passionate about technology.",
         dob: '1998/01/01', // Invalid date format
+        education: 'MS'
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
-      expect(response.body).toEqual(expect.objectContaining({ message: '"dob" must be in ISO 8601 date format' }));
+
+      expect(response.status).toBe(422);
+      expect(response.body).toEqual(expect.objectContaining({ errors: ['"dob" must be in ISO 8601 date format'] }));
     });
-  
+
     it('should return an error when "education" is not valid', async () => {
       const user = {
         email: 'test@gmail.com',
@@ -140,21 +159,21 @@ describe('UserController Tests', () => {
         dob: '1998-01-01',
         education: 'highschool', // Invalid education level
       };
-  
+
       const response = await request(app).post('/api/users').send(user);
-  
-      expect(response.status).toBe(400);
+
+      expect(response.status).toBe(422);
       expect(response.body).toEqual(
-        expect.objectContaining({ message: '"education" must be one of [becahlurar, MS, PHD]' })
+        expect.objectContaining({ errors: ['"education" must be one of [becahlurar, MS, PHD]'] })
       );
     });
   });
 
   describe('getAllUsers', () => {
     it('should return an array of users', async () => {
-      
+
       const response = await request(app).get('/api/users');
-  
+
       expect(response.status).toBe(200);
     });
   });
